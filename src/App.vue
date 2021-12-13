@@ -1,29 +1,28 @@
 <template>
-  <base-card>
-    <form action="">
-      <div>
-        <label for="login">Login</label>
-        <input type="text" name="password" id="password" />
-      </div>
-      <div>
-        <label for="password">Password</label>
-        <input type="text" name="password" id="passwrod" />
-      </div>
-      <base-button>Login</base-button>
-      <base-button>Create account</base-button>
-    </form>
-  </base-card>
+  <the-header></the-header>
+  <router-view></router-view>
 </template>
 
 <script>
+import TheHeader from "./components/layout/TheHeader.vue";
+
 export default {
-  name: "App",
+  components: {
+    TheHeader,
+  },
 };
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 body {
   background-color: #eee;
+  font-family: "Lato", sans-serif;
 }
 form {
   display: flex;
