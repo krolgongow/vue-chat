@@ -27,6 +27,9 @@
       </div>
     </div>
   </base-card>
+  <base-card class="logout-container">
+    <base-button class="Btn" link="/login">Logout</base-button>
+  </base-card>
 </template>
 
 <style scoped>
@@ -97,5 +100,15 @@ textarea {
 }
 textarea:focus {
   outline: none;
+}
+.logout-container {
+  position: relative;
+  height: 100px;
+}
+.Btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

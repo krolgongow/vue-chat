@@ -17,7 +17,7 @@ export default {
 .button {
   width: 160px;
   height: 50px;
-  margin: 10px 0 0;
+  /* margin: 10px 0 0; */
   text-transform: uppercase;
   background-color: rgb(100, 182, 89);
   color: #eee;
