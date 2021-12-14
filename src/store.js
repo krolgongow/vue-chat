@@ -17,7 +17,7 @@ const store = createStore({
   actions: {
     createNewAcc(context, payload) {
       fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCXC6KHYEhDXv98t2aavv52mLXLOnjkYl0",
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[KEY]",
         {
           method: "POST",
           body: JSON.stringify({
@@ -39,7 +39,7 @@ const store = createStore({
     },
     login(context, payload) {
       fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCXC6KHYEhDXv98t2aavv52mLXLOnjkYl0",
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[KEY]",
         {
           method: "POST",
           body: JSON.stringify({
