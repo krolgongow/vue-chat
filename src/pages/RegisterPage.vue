@@ -2,8 +2,8 @@
   <base-card>
     <form @submit.prevent="">
       <div class="form-control">
-        <label for="login">Login</label>
-        <input type="text" name="login" id="login" v-model="login" />
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" v-model="email" />
       </div>
       <div class="form-control">
         <label for="password">Password</label>
@@ -28,7 +28,9 @@
         <input type="text" name="nickname" id="nickname" v-model="nickname" />
       </div>
       <div class="buttons-container">
-        <base-button>Create account</base-button>
+        <base-button type="button" @click="submitForm"
+          >Create account</base-button
+        >
       </div>
     </form>
   </base-card>
@@ -38,11 +40,24 @@
 export default {
   data() {
     return {
-      login: "",
+      email: "",
       password: "",
       password2: "",
       nickname: "",
     };
+  },
+  methods: {
+    async submitForm() {
+      try {
+        this.$store.dispatch("createNewAcc", {
+          email: this.email,
+          password: this.password,
+        });
+        this.$router.replace("/chat");
+      } catch (err) {
+        throw new Error("Nie pyklo");
+      }
+    },
   },
 };
 </script>

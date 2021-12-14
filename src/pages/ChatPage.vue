@@ -28,9 +28,20 @@
     </div>
   </base-card>
   <base-card class="logout-container">
-    <base-button class="Btn" link="/login">Logout</base-button>
+    <base-button class="Btn" @click="logout">Logout</base-button>
   </base-card>
 </template>
+
+<script>
+export default {
+  methods: {
+    logout() {
+      this.$store.dispatch("logout");
+      this.$router.replace("/login");
+    },
+  },
+};
+</script>
 
 <style scoped>
 ::-webkit-scrollbar {

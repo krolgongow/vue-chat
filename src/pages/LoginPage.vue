@@ -2,8 +2,8 @@
   <base-card>
     <form @submit.prevent="">
       <div class="form-control">
-        <label for="login">Login</label>
-        <input type="text" name="login" id="login" v-model="login" />
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" v-model="email" />
       </div>
       <div class="form-control">
         <label for="password">Password</label>
@@ -15,7 +15,7 @@
         />
       </div>
       <div class="buttons-container">
-        <base-button @click="loginMethod">Login</base-button>
+        <base-button type="button" @click="login">Login</base-button>
         <base-button link="/register">Create account</base-button>
       </div>
     </form>
@@ -26,13 +26,17 @@
 export default {
   data() {
     return {
-      login: "",
+      email: "",
       password: "",
     };
   },
   methods: {
-    loginMethod() {
-      console.log("Works");
+    login() {
+      this.$store.dispatch("login", {
+        email: this.email,
+        password: this.password,
+      });
+      this.$router.replace("/chat");
     },
   },
 };
