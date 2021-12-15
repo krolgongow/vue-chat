@@ -13,10 +13,14 @@ const store = createStore({
       state.token = payload.token;
     },
   },
-  getters: {},
+  getters: {
+    isAuthenticated(state) {
+      return !!state.token;
+    },
+  },
   actions: {
-    createNewAcc(context, payload) {
-      fetch(
+    async createNewAcc(context, payload) {
+      const response = await fetch(
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCXC6KHYEhDXv98t2aavv52mLXLOnjkYl0",
         {
           method: "POST",
@@ -26,19 +30,22 @@ const store = createStore({
             returnSecureToken: true,
           }),
         }
-      )
-        .then((response) => response.json())
-        .then((response) => {
-          localStorage.setItem("token", response.idToken);
-          localStorage.setItem("userId", response.localId);
-          context.commit("setUser", {
-            userId: response.userId,
-            token: response.idToken,
-          });
-        });
+      );
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+
+      localStorage.setItem("token", responseData.idToken);
+      localStorage.setItem("userId", responseData.localId);
+      context.commit("setUser", {
+        userId: responseData.userId,
+        token: responseData.idToken,
+      });
     },
-    login(context, payload) {
-      fetch(
+    async login(context, payload) {
+      const response = await fetch(
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCXC6KHYEhDXv98t2aavv52mLXLOnjkYl0",
         {
           method: "POST",
@@ -48,16 +55,19 @@ const store = createStore({
             returnSecureToken: true,
           }),
         }
-      )
-        .then((response) => response.json())
-        .then((response) => {
-          localStorage.setItem("token", response.idToken);
-          localStorage.setItem("userId", response.localId);
-          context.commit("setUser", {
-            userId: response.userId,
-            token: response.idToken,
-          });
-        });
+      );
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+
+      localStorage.setItem("token", responseData.idToken);
+      localStorage.setItem("userId", responseData.localId);
+      context.commit("setUser", {
+        userId: responseData.userId,
+        token: responseData.idToken,
+      });
     },
     tryLogin(context) {
       const token = localStorage.getItem("token");

@@ -23,10 +23,6 @@
           v-model="password2"
         />
       </div>
-      <div class="form-control">
-        <label for="nickname">Nickname</label>
-        <input type="text" name="nickname" id="nickname" v-model="nickname" />
-      </div>
       <div class="buttons-container">
         <base-button type="button" @click="submitForm"
           >Create account</base-button
@@ -43,17 +39,21 @@ export default {
       email: "",
       password: "",
       password2: "",
-      nickname: "",
     };
   },
   methods: {
     async submitForm() {
       try {
-        this.$store.dispatch("createNewAcc", {
-          email: this.email,
-          password: this.password,
-        });
-        this.$router.replace("/chat");
+        if (this.password === this.password2) {
+          await this.$store.dispatch("createNewAcc", {
+            email: this.email,
+            password: this.password,
+          });
+          this.$router.replace("/chat");
+        } else {
+          console.log("passwords are not equal");
+          return;
+        }
       } catch (err) {
         throw new Error("Nie pyklo");
       }

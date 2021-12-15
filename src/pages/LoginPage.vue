@@ -31,12 +31,16 @@ export default {
     };
   },
   methods: {
-    login() {
-      this.$store.dispatch("login", {
-        email: this.email,
-        password: this.password,
-      });
-      this.$router.replace("/chat");
+    async login() {
+      try {
+        await this.$store.dispatch("login", {
+          email: this.email,
+          password: this.password,
+        });
+        this.$router.replace("/chat");
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
 };

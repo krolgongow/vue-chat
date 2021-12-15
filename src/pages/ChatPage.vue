@@ -28,16 +28,34 @@
     </div>
   </base-card>
   <base-card class="logout-container">
-    <base-button class="Btn" @click="logout">Logout</base-button>
+    <base-button class="btn" @click="openModal">New Topic</base-button>
+    <base-button class="btn" @click="logout">Logout</base-button>
   </base-card>
+  <new-topic v-if="creatingNewTopic" @close-modal="closeModal"></new-topic>
 </template>
 
 <script>
+import NewTopic from "../components/chat/NewTopic.vue";
+
 export default {
+  components: {
+    NewTopic,
+  },
+  data() {
+    return {
+      creatingNewTopic: false,
+    };
+  },
   methods: {
     logout() {
       this.$store.dispatch("logout");
       this.$router.replace("/login");
+    },
+    closeModal() {
+      this.creatingNewTopic = false;
+    },
+    openModal() {
+      this.creatingNewTopic = true;
     },
   },
 };
@@ -114,12 +132,7 @@ textarea:focus {
 }
 .logout-container {
   position: relative;
-  height: 100px;
-}
-.Btn {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: space-between;
 }
 </style>
