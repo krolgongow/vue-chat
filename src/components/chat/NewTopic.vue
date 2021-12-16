@@ -16,7 +16,9 @@
             v-model="message"
           ></textarea>
         </div>
-        <base-button class="submitBtn">Submit</base-button>
+        <base-button class="submitBtn" @click="sendingNewTopic"
+          >Submit</base-button
+        >
       </form>
     </base-card>
   </div>
@@ -34,6 +36,28 @@ export default {
   methods: {
     closeModal() {
       this.$emit("close-modal");
+    },
+    async sendingNewTopic() {
+      const userId = this.$store.getters.userId;
+      const token = this.$store.getters.token;
+      const newTopic = {
+        creator: userId,
+        message: this.message,
+        title: this.title,
+      };
+      const response = await fetch(
+        `https://vue-chat-e8fb7-default-rtdb.europe-west1.firebasedatabase.app/topics/${this.title}.json?auth=${token}`,
+        {
+          method: "POST",
+          body: JSON.stringify(newTopic),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("error");
+      }
+      this.title = "";
+      this.message = "";
+      this.closeModal();
     },
   },
 };

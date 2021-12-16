@@ -17,7 +17,7 @@
     <div class="panel">
       <div class="top">
         <p>USERNAME</p>
-        <button>
+        <button @click="refresh">
           <i class="fas fa-redo-alt"></i>
         </button>
       </div>
@@ -56,6 +56,9 @@ export default {
     },
     openModal() {
       this.creatingNewTopic = true;
+    },
+    refresh() {
+      this.$store.dispatch("updateTopicList");
     },
   },
 };
