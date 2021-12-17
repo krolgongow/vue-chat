@@ -2,26 +2,31 @@
   <base-card class="base-card">
     <div class="users">
       <ul>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
+        <li
+          v-for="topic in topicList"
+          :key="topic"
+          @click="setActiveTopic(topic)"
+        >
+          {{ topic }}
+        </li>
       </ul>
     </div>
     <div class="panel">
       <div class="top">
-        <p>USERNAME</p>
+        <p>{{ activeTopic }}</p>
         <button @click="refresh">
           <i class="fas fa-redo-alt"></i>
         </button>
       </div>
-      <div class="messages"></div>
+      <div class="messages">
+        <ul>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
       <div class="inputPanel">
         <textarea name="mes" id="mes" cols="40" rows="1"></textarea>
       </div>
@@ -31,7 +36,11 @@
     <base-button class="btn" @click="openModal">New Topic</base-button>
     <base-button class="btn" @click="logout">Logout</base-button>
   </base-card>
-  <new-topic v-if="creatingNewTopic" @close-modal="closeModal"></new-topic>
+  <new-topic
+    v-if="creatingNewTopic"
+    @close-modal="closeModal"
+    @refresh-list="refresh"
+  ></new-topic>
 </template>
 
 <script>
@@ -43,7 +52,9 @@ export default {
   },
   data() {
     return {
+      topicList: [],
       creatingNewTopic: false,
+      activeTopic: "",
     };
   },
   methods: {
@@ -57,9 +68,16 @@ export default {
     openModal() {
       this.creatingNewTopic = true;
     },
-    refresh() {
-      this.$store.dispatch("updateTopicList");
+    async refresh() {
+      await this.$store.dispatch("updateTopicList");
+      this.topicList = this.$store.getters.topicList;
     },
+    setActiveTopic(key) {
+      this.activeTopic = key;
+    },
+  },
+  created() {
+    this.refresh();
   },
 };
 </script>
@@ -83,9 +101,13 @@ export default {
 }
 .users li {
   height: 70px;
-  background-color: green;
+  background-color: rgb(100, 209, 86);
   list-style: none;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #222;
+  text-align: center;
+  color: #eee;
+  overflow: hidden;
+  cursor: pointer;
 }
 .panel {
   display: flex;
@@ -119,6 +141,15 @@ export default {
 }
 .messages {
   flex-grow: 1;
+}
+.messages li {
+  list-style: none;
+  width: 150px;
+  height: 50px;
+  margin-left: 15px;
+  margin-top: 10px;
+  border-radius: 15px;
+  background-color: rgb(100, 182, 89);
 }
 textarea {
   box-sizing: content-box;

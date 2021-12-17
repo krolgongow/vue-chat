@@ -26,7 +26,7 @@
 
 <script>
 export default {
-  emits: ["close-modal"],
+  emits: ["close-modal", "refresh-list"],
   data() {
     return {
       title: "",
@@ -57,6 +57,7 @@ export default {
       }
       this.title = "";
       this.message = "";
+      this.$emit("refresh-list");
       this.closeModal();
     },
   },

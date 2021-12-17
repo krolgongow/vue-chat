@@ -17,6 +17,9 @@ const store = createStore({
     setTopicList(state, payload) {
       state.topicList = payload;
     },
+    pushNewTopic(state, payload) {
+      state.topicList.push(payload);
+    },
   },
   getters: {
     isAuthenticated(state) {
